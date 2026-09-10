@@ -19,10 +19,7 @@ import { TextSizeAddon } from './TextSize';
 import { ReportIssueAddon } from './ReportIssue';
 import { ExpandableNavigationAddon } from './ExpandableNavigation';
 import { LightBoxAddon } from './LightBox';
-import {
-  createFrontendFeatureLoader,
-  createFrontendModule,
-} from '@backstage/frontend-plugin-api';
+import { createFrontendModule } from '@backstage/frontend-plugin-api';
 
 /** @alpha */
 const techDocsExpandableNavigationAddon = AddonBlueprint.make({
@@ -32,12 +29,6 @@ const techDocsExpandableNavigationAddon = AddonBlueprint.make({
     location: TechDocsAddonLocations.PrimarySidebar,
     component: ExpandableNavigationAddon,
   },
-});
-
-/** @alpha */
-export const techDocsExpandableNavigationAddonModule = createFrontendModule({
-  pluginId: 'techdocs',
-  extensions: [techDocsExpandableNavigationAddon],
 });
 
 /** @alpha */
@@ -51,12 +42,6 @@ const techDocsReportIssueAddon = AddonBlueprint.make({
 });
 
 /** @alpha */
-export const techDocsReportIssueAddonModule = createFrontendModule({
-  pluginId: 'techdocs',
-  extensions: [techDocsReportIssueAddon],
-});
-
-/** @alpha */
 const techDocsTextSizeAddon = AddonBlueprint.make({
   name: 'text-size',
   params: {
@@ -64,12 +49,6 @@ const techDocsTextSizeAddon = AddonBlueprint.make({
     location: TechDocsAddonLocations.Settings,
     component: TextSizeAddon,
   },
-});
-
-/** @alpha */
-export const techDocsTextSizeAddonModule = createFrontendModule({
-  pluginId: 'techdocs',
-  extensions: [techDocsTextSizeAddon],
 });
 
 /** @alpha */
@@ -83,17 +62,12 @@ const techDocsLightBoxAddon = AddonBlueprint.make({
 });
 
 /** @alpha */
-export const techDocsLightBoxAddonModule = createFrontendModule({
+export default createFrontendModule({
   pluginId: 'techdocs',
-  extensions: [techDocsLightBoxAddon],
-});
-
-/** @alpha */
-export default createFrontendFeatureLoader({
-  async *loader() {
-    yield techDocsExpandableNavigationAddonModule;
-    yield techDocsReportIssueAddonModule;
-    yield techDocsTextSizeAddonModule;
-    yield techDocsLightBoxAddonModule;
-  },
+  extensions: [
+    techDocsExpandableNavigationAddon,
+    techDocsReportIssueAddon,
+    techDocsTextSizeAddon,
+    techDocsLightBoxAddon,
+  ],
 });
